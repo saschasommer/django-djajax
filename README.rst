@@ -75,10 +75,10 @@ Django's ``settings.py``::
     
 #. Example for a custom endpoint: ::
 
-from djajax.views import DjajaxEndpoint
-class DjajaxCosinnusEndpoint(DjajaxEndpoint):
-       def check_write_permissions(self, obj, user):
-              """ Better permission checks """
-              return user.is_authenticated() and obj.creator == user
+       from djajax.views import DjajaxEndpoint
+       class DjajaxCosinnusEndpoint(DjajaxEndpoint):
+              def check_write_permissions(self, obj, user):
+                     """ Better permission checks """
+                     return user.is_authenticated() and obj.creator == user
 
 .. _django-djajax: https://github.com/saschan/django-djajax
