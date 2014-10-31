@@ -30,7 +30,7 @@ that are required:
 
 #. Installing::
 
-       pip install django-djajax
+       pip install -e git://github.com/saschan/django-djajax.git@master#egg=django-djajax
 
 #. List this application in the ``INSTALLED_APPS`` portion of your settings file.
    Your settings file will look something like::
@@ -40,11 +40,10 @@ that are required:
             'djajax',
         )
 
-#. Add the djajax URL config to your root URL config:
-
+#. Add the djajax URL config to your root URL config: ::
 
         urlpatterns += patterns('',
-            ...
+            ...,
             url(r'^', include('djajax.urls', namespace='djajax')),
         )
         
@@ -71,7 +70,7 @@ What you have to do:
     Connect the model attribute. Here, we have a todo entry and want to be able to change the todo's title
     attribute via an AJAX call whenever the input's value is changed or the field loses focus: ::
     
-       <input value="{{ folder.title }}" {% djajax_connect folder.title trigger_on="enter_key,lose_focus" empty="false" %} />
+       <input value="{{ todo.title }}" {% djajax_connect todo.title trigger_on="enter_key,lose_focus" empty="false" %} />
               
     This doesn't necessarily need to be located in a <form> tag. A csrf cookie will be automatically generated
     for the AJAX call.
