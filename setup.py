@@ -5,7 +5,7 @@ name = 'django-djajax'
 package = 'djajax'
 version = '0.1.0'
 
-url = 'https://github.com/j'
+url = 'https://github.com/saschan/django-djajax'
 author = 'Sascha Narr'
 author_email = 'saschanarr@gmail.com'
 license_ = 'BSD'

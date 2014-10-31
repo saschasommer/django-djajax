@@ -27,9 +27,10 @@ class DjajaxEndpoint(View):
     
     def check_write_permissions(self, obj, user):
         """ Permissions check if ``user`` may modify ``obj``.
-            It is highly recommended to override this method!
+            Defaults to checking if the user is logged in.
+            It is highly recommended to override this method to add your own security checks!
         """
-        return True
+        return user.is_authenticated()
     
     def dispatch(self, request, *args, **kwargs):
         """
