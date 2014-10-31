@@ -73,15 +73,12 @@ Django's ``settings.py``::
     Lets you specify a different Djajax endpoint, which can override the existing one. Especcially
     useful to specify custom write permissions for backend models.
     
-    #. Example for a custom endpoint:
-    
-    from djajax.views import DjajaxEndpoint
-    
-    class DjajaxCosinnusEndpoint(DjajaxEndpoint):
-    
-        def check_write_permissions(self, obj, user):
-            """ Better permission checks """
-            return user.is_authenticated() and obj.creator == user
-     
-     
+#. Example for a custom endpoint: ::
+
+from djajax.views import DjajaxEndpoint
+class DjajaxCosinnusEndpoint(DjajaxEndpoint):
+       def check_write_permissions(self, obj, user):
+              """ Better permission checks """
+              return user.is_authenticated() and obj.creator == user
+
 .. _django-djajax: https://github.com/saschan/django-djajax
