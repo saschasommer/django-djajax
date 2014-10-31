@@ -158,7 +158,7 @@ class DjajaxSetupNode(template.Node):
                 context.update(additional_context)
                 context_items.append(context)
                 
-            rendered_js += render_to_string('cosinnus/js/djajax_connect.js', {'djajax_items': context_items}) + '\n'
+            rendered_js += render_to_string('djajax/js/djajax_connect.js', {'djajax_items': context_items}) + '\n'
             
             js_file = static('js/djajax.js')
             return """<script src="%s"></script>\n<script type="text/javascript">\n%s\n</script>""" % (js_file, rendered_js)

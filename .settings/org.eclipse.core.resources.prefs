@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
 encoding//djajax/__init__.py=utf-8
+encoding//djajax/templatetags/djajax_tags.py=utf-8
 encoding//djajax/urls.py=utf-8
+encoding//djajax/utils/http.py=utf-8
+encoding//djajax/views.py=utf-8

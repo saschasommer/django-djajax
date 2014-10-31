@@ -11,7 +11,7 @@ from __future__ import unicode_literals
 from django.conf.urls import patterns, url
 
 
-urlpatterns = patterns(1, None, False, 'djajax.views',
+urlpatterns = patterns('djajax.views',
                            
     url(r'^taggable_object/update/$', 'djajax_endpoint', name='taggable-object-update-api'),
                            

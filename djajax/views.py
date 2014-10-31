@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db.models.loading import get_model
-from cosinnus.utils.http import JSONResponse
 from cosinnus.utils.permissions import check_object_write_access
+
+from django.db.models.loading import get_model
 from django.views.generic.base import View
 from django.utils.importlib import import_module
 from django.conf import settings
 
+from utils.http import JSONResponse
 
 
-DEFAULT_DJAJAX_VIEW_CLASS = 'cosinnus.views.api.DjajaxEndpoint'
+
+DEFAULT_DJAJAX_VIEW_CLASS = 'djajax.views.DjajaxEndpoint'
 
     
 def _resolve_class(path_to_class):
@@ -32,7 +34,7 @@ class DjajaxEndpoint(View):
             The request must be a POST, be authenticated and supply a csrf token.
             
             By a given app_label, model_name and pk, the model instance to be modified is resolved.
-                - write permissions will be checked for that instance via default Cosinnus permissions.
+                - write permissions will be checked for that instance via an extensible permission function.
             
             By a given property_name, the field that is supposed to be updated is resolved
                 - the field value will be set to ``property_data`` and the instance will be saved
@@ -116,4 +118,4 @@ class DjajaxEndpoint(View):
 
 
 
-djajax_endpoint = _resolve_class(settings.DJAJAX_VIEW_CLASS or DEFAULT_DJAJAX_VIEW_CLASS).as_view()
+djajax_endpoint = _resolve_class(getattr(settings, 'DJAJAX_VIEW_CLASS', DEFAULT_DJAJAX_VIEW_CLASS)).as_view()

@@ -27,6 +27,10 @@ that are required:
             'djajax',
         )
 
+#. Add the djajax URL config to your root URL config:
+
+        (r'^djajax/', include('djajax.urls')),
+
 Usage examples
 ==============
 
