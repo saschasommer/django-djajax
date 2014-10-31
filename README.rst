@@ -29,8 +29,13 @@ that are required:
 
 #. Add the djajax URL config to your root URL config:
 
-        (r'^djajax/', include('djajax.urls')),
 
+        urlpatterns += patterns('',
+            ...
+            url(r'^', include('djajax.urls', namespace='djajax')),
+        )
+        
+        
 Usage examples
 ==============
 

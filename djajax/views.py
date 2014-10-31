@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from cosinnus.utils.permissions import check_object_write_access
-
 from django.db.models.loading import get_model
 from django.views.generic.base import View
 from django.utils.importlib import import_module
@@ -26,6 +24,12 @@ def _resolve_class(path_to_class):
 
 
 class DjajaxEndpoint(View):
+    
+    def check_write_permissions(self, obj, user):
+        """ Permissions check if ``user`` may modify ``obj``.
+            It is highly recommended to override this method!
+        """
+        return True
     
     def dispatch(self, request, *args, **kwargs):
         """
@@ -68,7 +72,7 @@ class DjajaxEndpoint(View):
                 return JSONResponse('Object with pk "%s" not found for class "%s"!' % (pk, model_class), status=400)
             
             #check permissions:
-            if not check_object_write_access(instance, request.user):
+            if not self.check_write_permissions(instance, request.user):
                 return JSONResponse('You do not have the necessary permissions to modify this object!', status=403)
             
             # check field exists

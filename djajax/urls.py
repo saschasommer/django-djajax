@@ -13,6 +13,6 @@ from django.conf.urls import patterns, url
 
 urlpatterns = patterns('djajax.views',
                            
-    url(r'^taggable_object/update/$', 'djajax_endpoint', name='taggable-object-update-api'),
+    url(r'^djajax/update/$', 'djajax_endpoint', name='djajax-object-update-api'),
                            
 )

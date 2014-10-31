@@ -10,6 +10,7 @@ from django.templatetags.static import static
 from django.db.models.query import QuerySet
 from django.core.serializers import serialize
 from django.utils import simplejson
+from django.core.urlresolvers import reverse
 
 register = template.Library()
 
@@ -36,7 +37,7 @@ class DjajaxConnectNode(template.Node):
          # the jQuery trigger on which the value should be updated
         'trigger_on': 'value_changed',
         # the URL the value should be POSTed to
-        'post_to': '/api/v1/taggable_object/update/',
+        'post_to': reverse('djajax:djajax-object-update-api'),
         # which jQuery attribute selector do we get the value from the html element?
         'value_selector': 'val',
         # if the attribute selector isn't val (for example it's "attr", what's the attr argument?
