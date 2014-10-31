@@ -7,8 +7,20 @@ django-djajax
 Purpose
 =======
 
-A Django library that integrates Ajax calls into templates, so one can 
-attach form input changes to backend models. 
+A Django library that integrates Ajax model change functionality into templates, 
+so one can attach form inputs to backend models. 
+
+
+WARNING!
+========
+
+Djajax is an experimental django app, currently deep in its first iteration. 
+The app still has major security flaws because of its experimental nature.
+
+
+I recommend you DON'T USE djajax in your project yet, 
+especially if it is running in a production environment!
+
 
 Install
 =======
@@ -40,11 +52,13 @@ that are required:
 Usage examples
 ==============
 
-Documentation is very incomplete and will be added later on. Here is a very simple quick example:
+This documentation is very incomplete as of now. More details and examples will be added later on. 
+
+Here is a very simple quick example:
 
 What we will do is connect an input box in a model form with the model attribute. Whenever a specified
 Javascript event is triggered on the client (default: enter key pressed), the connected model attribute
-is updated in the backend via an AJAX call. The necessary javascript functions are genereted automatically
+is updated in the backend via an AJAX call. The necessary javascript functions are generated automatically
 by djajax.
 
 What you have to do:
@@ -55,25 +69,32 @@ What you have to do:
 
 #. In your django template:
     Connect the model attribute. Here, we have a todo entry and want to be able to change the todo's title
-    attribute via an AJAX call whenever the input's value is changed or the field loses focus:
+    attribute via an AJAX call whenever the input's value is changed or the field loses focus: ::
     
-    <input value="{{ folder.title }}" {% djajax_connect folder.title trigger_on="enter_key,lose_focus" empty="false" %} />
+       <input value="{{ folder.title }}" {% djajax_connect folder.title trigger_on="enter_key,lose_focus" empty="false" %} />
               
     This doesn't necessarily need to be located in a <form> tag. A csrf cookie will be automatically generated
     for the AJAX call.
     
-    Available triggers are: enter_key, lose_focus, click, value_changed (this one can be spammy!).
+    Available triggers are: ``enter_key``, ``lose_focus``, ``click``, ``value_changed`` (this one can be spammy!).
+    
+    Since ``empty="false"`` is set, if the user attempts to submit an empty value, the input is reset
+    to its last known value, and no model change happens.
     
 Global Settings
 ===============
 
 Django's ``settings.py``::
     
+    # Lets you specify a different Djajax endpoint, which can override the existing one. 
+    # Especially useful to specify custom write permissions for backend models.
     DJAJAX_VIEW_CLASS = 'djajax.views.DjajaxEndpoint'
-    Lets you specify a different Djajax endpoint, which can override the existing one. Especcially
-    useful to specify custom write permissions for backend models.
     
-#. Example for a custom endpoint: ::
+
+Custom Djajax Endpoints
+=======================
+
+Example for a custom endpoint: ::
 
        from djajax.views import DjajaxEndpoint
        class DjajaxCosinnusEndpoint(DjajaxEndpoint):
