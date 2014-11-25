@@ -54,6 +54,15 @@ function djajax_trigger(e, item) {
             console.log('Submitted field value for ' + item.node_id + ' was found to be empty, but djajax empty=False was set! Restoring last value.');
             // restore last data
             djajax_set_value(item, $('[djajax-id=' + item.node_id + ']').attr('djajax-last-value'));
+            
+            if ('on_error' in item) {
+                if ('on_error_args' in item) {
+                    executeFunctionByName(item.on_error, window, item.on_error_args);
+                } else {
+                    executeFunctionByName(item.on_error, window);
+                }
+            }
+            
             return;
         }
     }
