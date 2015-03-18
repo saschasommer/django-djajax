@@ -25,7 +25,7 @@ def _resolve_class(path_to_class):
 
 class DjajaxEndpoint(View):
     
-    def check_write_permissions(self, obj, user):
+    def check_write_permissions(self, obj, user, **kwargs):
         """ Permissions check if ``user`` may modify ``obj``.
             Defaults to checking if the user is logged in.
             It is highly recommended to override this method to add your own security checks!
@@ -73,7 +73,7 @@ class DjajaxEndpoint(View):
                 return JSONResponse('Object with pk "%s" not found for class "%s"!' % (pk, model_class), status=400)
             
             #check permissions:
-            if not self.check_write_permissions(instance, request.user):
+            if not self.check_write_permissions(instance, request.user, fields=[property_name]):
                 return JSONResponse('You do not have the necessary permissions to modify this object!', status=403)
             
             # check field exists
