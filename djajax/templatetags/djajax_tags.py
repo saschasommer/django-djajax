@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from uuid import uuid1
+import json
 
 from django import template
 from django.template.loader import render_to_string
@@ -9,7 +10,6 @@ from django.utils.safestring import mark_safe
 from django.templatetags.static import static
 from django.db.models.query import QuerySet
 from django.core.serializers import serialize
-from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
 register = template.Library()
@@ -174,6 +174,6 @@ def jsonify(obj):
     if isinstance(obj, QuerySet):
         ret = serialize('json', obj)
     else:
-        ret = simplejson.dumps(obj)
+        ret = json.dumps(obj)
     return mark_safe(ret)
 
