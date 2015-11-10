@@ -91,7 +91,7 @@ class DjajaxEndpoint(View):
             # resolve supplied ids for related fields
             is_related_field = hasattr(field, 'related')
             if is_related_field:
-                related_class = field.related.parent_model
+                related_class = getattr(field.related, 'parent_model', getattr(field.related, 'model')) # pre django 1.8 compat
                 try:
                     property_data = related_class._default_manager.get(pk=property_data)
                 except related_class.DoesNotExist:
