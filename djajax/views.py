@@ -7,6 +7,7 @@ from django.utils.importlib import import_module
 from django.conf import settings
 
 from utils.http import JSONResponse
+import defaults
 
 
 
@@ -60,6 +61,11 @@ class DjajaxEndpoint(View):
             pk = request.POST.get('pk')
             property_name = request.POST.get('property_name')
             property_data = request.POST.get('property_data')
+            
+            # pre-check in settings: is model and attributes in access white-list?
+            attribute_list = defaults.DJAJAX_ALLOWED_ACCESSES.get('%s.%s' % (app_label, model_name), None)
+            if not attribute_list or not property_name in attribute_list:
+                return JSONResponse('This object cannot be modified!', status=403)
             
             # resolve model class and get instance
             model_class = get_model(app_label, model_name)
