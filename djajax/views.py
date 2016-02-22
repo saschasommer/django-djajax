@@ -65,7 +65,8 @@ class DjajaxEndpoint(View):
             # pre-check in settings: is model and attributes in access white-list?
             attribute_list = defaults.DJAJAX_ALLOWED_ACCESSES.get('%s.%s' % (app_label, model_name), None)
             if not attribute_list or not property_name in attribute_list:
-                return JSONResponse('This object cannot be modified!', status=403)
+                return JSONResponse(data={'status':'error', 'reason':'This object cannot be modified! (%s_%s.%s)' \
+                                          % (app_label, model_name, property_name)}, status=403)
             
             # resolve model class and get instance
             model_class = get_model(app_label, model_name)
