@@ -6,8 +6,8 @@ from django.views.generic.base import View
 from django.utils.importlib import import_module
 from django.conf import settings
 
-from utils.http import JSONResponse
-import defaults
+from djajax.utils.http import JSONResponse
+import djajax.defaults
 
 
 
