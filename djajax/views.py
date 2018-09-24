@@ -7,7 +7,7 @@ from django.utils.importlib import import_module
 from django.conf import settings
 
 from djajax.utils.http import JSONResponse
-import djajax.defaults
+from djajax.defaults import DJAJAX_ALLOWED_ACCESSES
 
 
 
@@ -63,7 +63,7 @@ class DjajaxEndpoint(View):
             property_data = request.POST.get('property_data')
             
             # pre-check in settings: is model and attributes in access white-list?
-            attribute_list = defaults.DJAJAX_ALLOWED_ACCESSES.get('%s.%s' % (app_label, model_name), None)
+            attribute_list = DJAJAX_ALLOWED_ACCESSES.get('%s.%s' % (app_label, model_name), None)
             if not attribute_list or not property_name in attribute_list:
                 return JSONResponse(data={'status':'error', 'reason':'This object cannot be modified! (%s_%s.%s)' \
                                           % (app_label, model_name, property_name)}, status=403)
