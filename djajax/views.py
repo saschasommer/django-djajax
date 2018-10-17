@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db.models.loading import get_model
+from django.apps import apps
 from django.views.generic.base import View
-from django.utils.importlib import import_module
+from importlib import import_module
 from django.conf import settings
 
 from djajax.utils.http import JSONResponse
@@ -69,7 +69,7 @@ class DjajaxEndpoint(View):
                                           % (app_label, model_name, property_name)}, status=403)
             
             # resolve model class and get instance
-            model_class = get_model(app_label, model_name)
+            model_class = apps.get_model(app_label, model_name)
             if not model_class:
                 return JSONResponse('Model class %s.%s not found!' % (app_label, model_name), status=400)
             try:
