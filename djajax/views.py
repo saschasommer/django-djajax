@@ -84,8 +84,7 @@ class DjajaxEndpoint(View):
                 return JSONResponse('You do not have the necessary permissions to modify this object!', status=403)
             
             # check field exists
-            fields = model_class._meta.get_field_by_name(property_name)
-            field = fields[0] if fields else None
+            field = model_class._meta.get_field(property_name)
             if not field or not field.editable:
                 return JSONResponse('Field "%s" not found for class "%s"!' % (property_name, model_class), status=400)
     
