@@ -89,9 +89,9 @@ class DjajaxEndpoint(View):
                 return JSONResponse('Field "%s" not found for class "%s"!' % (property_name, model_class), status=400)
     
             # resolve supplied ids for related fields
-            is_related_field = hasattr(field, 'related')
+            is_related_field = field.is_relation
             if is_related_field:
-                related_class = getattr(field.related, 'parent_model', getattr(field.related, 'model')) # pre django 1.8 compat
+                related_class = field.related_model
                 try:
                     property_data = related_class._default_manager.get(pk=property_data)
                 except related_class.DoesNotExist:
