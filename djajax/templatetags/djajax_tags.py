@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 from django.templatetags.static import static
 from django.db.models.query import QuerySet
 from django.core.serializers import serialize
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 register = template.Library()
 
